@@ -5,6 +5,7 @@ export class Builder {
   constructor(materials) {
     this.materials = materials;
     this.pieces = new Map();
+    this.edges = [];
     this.temp = new T.Object3D();
   }
   add(geometry, material, x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1) {
@@ -13,6 +14,9 @@ export class Builder {
     this.temp.scale.set(sx, sy, sz);
     this.temp.updateMatrix();
     const geo = geometry.clone().applyMatrix4(this.temp.matrix);
+    if (['stone', 'pale', 'dark', 'wood'].includes(material) && geometry.type !== 'PlaneGeometry') {
+      this.edges.push(new T.EdgesGeometry(geo, 48));
+    }
     if (geo.index) {
       const flat = geo.toNonIndexed();
       geo.dispose();
@@ -71,6 +75,13 @@ export class Builder {
       mesh.receiveShadow = true;
       mesh.name = `world-${name}`;
       root.add(mesh);
+    }
+    if (this.edges.length) {
+      const lines = new T.LineSegments(mergeGeometries(this.edges, false), this.materials.ink);
+      lines.name = 'architectural-ink';
+      root.add(lines);
+      this.edges.forEach((g) => g.dispose());
+      this.edges = [];
     }
     this.pieces.clear();
     return root;

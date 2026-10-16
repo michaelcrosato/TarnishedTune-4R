@@ -32,6 +32,16 @@ Add an enemy archetype by supplying its health, poise, speed, range, damage, win
 
 All durations that affect gameplay are integer ticks. Combat cones come from the engine’s public `inCone`; world obstacles are Rapier shapes. The mesh recipe uses the same obstacle dimensions. Decorative distant scenery is not traversable.
 
+## Presentation authoring
+
+`src/view/materials.js` defines the shared palette through the engine's material registry and `createStyleSet({style:'toon'})`. Three lighting bands and a restrained rim are the default on both WebGPU and WebGL2. Character silhouettes use the engine's pixel-width `createOutline` shells; architecture edges are merged linework. Keep colors and painted texture contrast together when changing the palette.
+
+`src/view/motion.js` samples named poses using actual weapon and archetype timings. `src/view/character.js` owns the articulated hierarchy, damped pose blending, distance-driven gait, the engine's `twoBone` foot placement, supporting-hand IK, cape deformation and bounded blade trails. Presentation state never writes to simulation components. Death settling may finish in render time while the death screen pauses the simulation. `__tune.motion()` returns pose/foot diagnostics for inspection.
+
+`src/view/level-details.js` is the regional decoration pass. Large new structures sit outside walkable regions or within existing collision volumes; hanging banners and lanterns are above player height. New plants and surface engravings are decorative. The authored route and collision map remain authoritative.
+
+Run the browser-free presentation tests before opening the art review. The review stage under `scripts/review-stage.js` imports the actual game modules through Vite so it shares one three.js/TSL instance. Do not mix a raw three.js build with Vite's optimized modules: duplicate TSL stacks break shader evaluation. Keep the separate normal-rules pilot proof; isolated poses are visual inspection, not gameplay completion evidence.
+
 ## Save behavior
 
 Only local browser storage is used. The save records checkpoint, upgrades, echoes, inventory, collected items, lore, shortcut, boss victory and recoverable death drop. It deliberately resumes at a safe flame. New journey requires an in-game overwrite confirmation when a save exists. Corrupt/incompatible saves are ignored; denied writes report that progress is temporary without preventing play. The demo has no write path.

@@ -1,5 +1,7 @@
 # Verification — 16 October 2026
 
+This report records the original release. The current cel-shaded upgrade is covered by [the art-pass report](CEL-SHADED-PASS.md) and [its verification data](cel-verification.json): 34 tests, the complete normal-rules campaign, browser/viewport coverage and a fresh hardware benchmark.
+
 The tested story is: title/controller input → fixed-step my-3dge simulation → rendered gameplay and audio → persisted checkpoint → Continue, with an isolated autonomous showcase that reaches the ending and repeats.
 
 ## Results

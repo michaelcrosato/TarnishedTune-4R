@@ -3,6 +3,7 @@ import * as T from 'three/webgpu';
 import { Rng } from '../../vendor/my3dge/my3dge.js';
 import { LEVEL, SHRINES, onGround } from '../sim/content.js';
 import { Builder } from './builder.js';
+import { addLevelDetails } from './level-details.js';
 function column(b, x, z, h = 8) {
   b.box('dark', x, 0.25, z, 1.9, 0.5, 1.9);
   b.box('pale', x, 0.7, z, 1.5, 0.4, 1.5);
@@ -74,6 +75,15 @@ function tree(b, rng, x, z, scale = 1, golden = false) {
         0.35,
         1,
       );
+  for (const tip of tips)
+    for (let i = 0; i < 3; i++)
+      b.beam(
+        'bronze',
+        tip,
+        [tip[0] + Math.sin(i * 2) * scale, tip[1] + 0.5 * scale, tip[2] + Math.cos(i * 2) * scale],
+        0.045 * scale,
+        0.012 * scale,
+      );
   if (golden) for (const tip of tips) b.sphere('glow', tip[0], tip[1], tip[2], 0.07 * scale);
 }
 export function buildWorld(materials) {
@@ -87,7 +97,7 @@ export function buildWorld(materials) {
   for (let x = 2; x < 63; x++)
     for (let z = 2; z < 118; z++)
       if (onGround(x + 0.5, z + 0.5)) {
-        b.add(plane, (x + z) % 17 === 0 ? 'moss' : 'floor', x + 0.5, 0, z + 0.5);
+        b.add(plane, 'floor', x + 0.5, 0, z + 0.5);
         if (
           !onGround(x - 1, z + 0.5) ||
           !onGround(x + 1.5, z + 0.5) ||
@@ -199,7 +209,48 @@ export function buildWorld(materials) {
     if (i % 6 === 0) b.sphere('stone', x, 0.13, z, rng.range(0.12, 0.4), 1.6, 0.7, 1);
     else {
       const h = rng.range(0.2, 0.65);
-      b.beam(i % 4 ? 'grass' : 'leaf', [x, 0, z], [x + rng.range(-0.18, 0.18), h, z], 0.024, 0.005);
+      for (let blade = 0; blade < 4; blade++) {
+        const a = rng.range(0, Math.PI * 2),
+          w = 0.04,
+          dx = Math.sin(a),
+          dz = Math.cos(a),
+          sideX = Math.cos(a) * w,
+          sideZ = -Math.sin(a) * w;
+        const v = [
+          x - sideX,
+          0,
+          z - sideZ,
+          x + sideX,
+          0,
+          z + sideZ,
+          x + dx * h * 0.3 + sideX * 0.5,
+          h * 0.6,
+          z + dz * h * 0.3 + sideZ * 0.5,
+          x - sideX,
+          0,
+          z - sideZ,
+          x + dx * h * 0.3 + sideX * 0.5,
+          h * 0.6,
+          z + dz * h * 0.3 + sideZ * 0.5,
+          x + dx * h * 0.3 - sideX * 0.5,
+          h * 0.6,
+          z + dz * h * 0.3 - sideZ * 0.5,
+          x + dx * h * 0.3 - sideX * 0.5,
+          h * 0.6,
+          z + dz * h * 0.3 - sideZ * 0.5,
+          x + dx * h * 0.3 + sideX * 0.5,
+          h * 0.6,
+          z + dz * h * 0.3 + sideZ * 0.5,
+          x + dx * h * 0.6,
+          h,
+          z + dz * h * 0.6,
+        ];
+        const g = new T.BufferGeometry();
+        g.setAttribute('position', new T.Float32BufferAttribute(v, 3));
+        g.computeVertexNormals();
+        b.add(g, i % 4 ? 'grass' : 'leaf');
+        g.dispose();
+      }
     }
   }
   // Mountains and ruins beyond the traversable floating promontory.
@@ -213,6 +264,7 @@ export function buildWorld(materials) {
       b.cylinder('dark', x, h * 0.7, z, 0, 4, h * 0.25, 4);
     }
   }
+  const details = addLevelDetails(b, dynamic, materials);
   const water = new T.Mesh(new T.PlaneGeometry(900, 900), materials.water);
   water.rotation.x = -Math.PI / 2;
   water.position.set(20, -15, -20);
@@ -227,5 +279,5 @@ export function buildWorld(materials) {
   const fog = new T.Mesh(new T.PlaneGeometry(8, 8), materials.ghost);
   fog.position.set(32, 4, 39);
   dynamic.add(fog);
-  return { static: b.finish(), dynamic, gate, fog };
+  return { static: b.finish(), dynamic, gate, fog, details };
 }

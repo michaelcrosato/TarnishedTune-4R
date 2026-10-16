@@ -22,6 +22,12 @@ npm run preview     # serve that build on the same reserved port
 
 WebGPU is preferred. A game-specific WebGL2 adapter supports browsers without WebGPU. Graphics remain presentation-only; the same my-3dge simulation runs on either backend.
 
+## Cel-shaded presentation
+
+The game now uses my-3dge’s three-band lighting, ink outlines, a cool stone/teal palette and amber accents. Articulated elbows and knees, planted-foot movement, distinct light combos, two-handed heavy strikes, dodge/death transitions and animated cloth replace the original rigid poses. The sanctuary adds banners, stained-glass rosettes, fluted columns, lanterns, statuary, offerings, ferns and flowers.
+
+See [the art-pass notes](docs/CEL-SHADED-PASS.md) for implementation and verification. `scripts/art-review.mjs` captures motion-review frames from the real rigs through the development server; it accepts the same `TUNE_CDP`, `TUNE_URL` and `TUNE_QA_OUT` variables as the browser checker.
+
 ## The pilgrimage
 
 - Deliberate sword combat: three-hit light chains, committed heavy attacks, posture breaks, ripostes, directional guarding, guard counters and timed parries.

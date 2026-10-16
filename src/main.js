@@ -177,6 +177,8 @@ async function boot() {
   snapshot = game.read();
   ui = createUI(action);
   view = await createRenderer(document.querySelector('#world'), settings);
+  view.draw(snapshot, 0, 1 / 60, 'title', [0, 0], settings.reducedMotion);
+  await view.warmup();
   screen('title');
   document.querySelector('#loading').hidden = true;
   document.querySelector('#mobile-menu').addEventListener('click', () => {
@@ -244,6 +246,7 @@ async function boot() {
       return { ...view.diagnostics, audio: sound.info };
     },
     action,
+    motion: () => view.motionReport(),
     physical: () => {
       const exit = flow.physical();
       if (exit) void title(false);

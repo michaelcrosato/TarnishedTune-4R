@@ -1,0 +1,366 @@
+{
+  "date": "2026-10-16",
+  "scope": [
+    "three-band cel shading and ink outlines",
+    "articulated, blended animation and planted feet",
+    "richer regional level detail"
+  ],
+  "engine": {
+    "repository": "https://github.com/michaelcrosato/my-3dge",
+    "commit": "ff439e25f23762908d0fae29391547c7ccc9d43c",
+    "artifact": "vendor/my3dge/my3dge.js",
+    "sha256": "a112d0c5ceb5110507a9153007d1cc3cab7923e03d1c09426d51dfb44b96439c",
+    "version": "0.0.0 (commit-pinned lean distribution)",
+    "localPatches": []
+  },
+  "tests": {
+    "headless": 34,
+    "presentation": 9,
+    "fullCampaignSeeds": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "beforeHash": "8e043b0a823aa98e",
+    "afterHash": "8e043b0a823aa98e",
+    "completionTicks": 6473,
+    "build": "production Vite output"
+  },
+  "art": {
+    "lighting": "my-3dge banded toon",
+    "bands": 3,
+    "outlines": true,
+    "details": {
+      "banners": 10,
+      "ferns": 44,
+      "flowers": 90,
+      "ivy": 4,
+      "statues": 6,
+      "lanterns": 4,
+      "rosettes": 2
+    }
+  },
+  "motionReview": {
+    "poses": 19,
+    "errors": [],
+    "artifactDirectory": "/tmp/tarnished-tune-cel"
+  },
+  "browser": {
+    "checks": [
+      "keyboard focus navigation, guide, and title-to-game entry",
+      "camera-relative movement and attack inputs reach the simulation",
+      "pause freezes simulation",
+      "controller-style settings change and persist",
+      "shrine, upgrade and departure UI",
+      "saved checkpoint survives reload and Continue restores progression",
+      "death presentation and checkpoint retry",
+      "final interaction produces the ending",
+      "ten-second title inactivity starts actual autonomous gameplay",
+      "keyboard interrupts attract immediately and demo cannot overwrite a player save",
+      "complete demo reaches victory and autonomously restarts",
+      "standard PS5 Cross confirms the focused title item without a gameplay action",
+      "gamepad stick input interrupts demo"
+    ],
+    "errors": []
+  },
+  "viewports": [
+    {
+      "label": "Pixel 10",
+      "engine": "chromium",
+      "width": 360,
+      "height": 732,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "iPhone SE",
+      "engine": "webkit",
+      "width": 375,
+      "height": 667,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "iPhone 17 Pro",
+      "engine": "webkit",
+      "width": 402,
+      "height": 681,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "iPhone 17 Pro Max",
+      "engine": "webkit",
+      "width": 440,
+      "height": 763,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "iPhone 17 Pro landscape",
+      "engine": "webkit",
+      "width": 756,
+      "height": 352,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "Galaxy Z Fold 7 (open)",
+      "engine": "chromium",
+      "width": 984,
+      "height": 1016,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "Galaxy Tab S9",
+      "engine": "chromium",
+      "width": 640,
+      "height": 1024,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "iPad Mini",
+      "engine": "webkit",
+      "width": 768,
+      "height": 1024,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "iPad Pro 11 landscape",
+      "engine": "webkit",
+      "width": 1194,
+      "height": 834,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "4:3 1024x768",
+      "engine": "chromium",
+      "width": 1024,
+      "height": 768,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "4:3 1024x768",
+      "engine": "firefox",
+      "width": 1024,
+      "height": 768,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "4:3 1024x768",
+      "engine": "webkit",
+      "width": 1024,
+      "height": 768,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "Laptop 1366x768",
+      "engine": "chromium",
+      "width": 1366,
+      "height": 768,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "Laptop 1366x768",
+      "engine": "firefox",
+      "width": 1366,
+      "height": 768,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "Laptop 1366x768",
+      "engine": "webkit",
+      "width": 1366,
+      "height": 768,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "16:10 1440x900",
+      "engine": "chromium",
+      "width": 1440,
+      "height": 900,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "16:10 1440x900",
+      "engine": "firefox",
+      "width": 1440,
+      "height": 900,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "16:10 1440x900",
+      "engine": "webkit",
+      "width": 1440,
+      "height": 900,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "16:9 1920x1080",
+      "engine": "chromium",
+      "width": 1920,
+      "height": 1080,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "16:9 1920x1080",
+      "engine": "firefox",
+      "width": 1920,
+      "height": 1080,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "16:9 1920x1080",
+      "engine": "webkit",
+      "width": 1920,
+      "height": 1080,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "21:9 2560x1080",
+      "engine": "chromium",
+      "width": 2560,
+      "height": 1080,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "21:9 2560x1080",
+      "engine": "firefox",
+      "width": 2560,
+      "height": 1080,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    },
+    {
+      "label": "21:9 2560x1080",
+      "engine": "webkit",
+      "width": 2560,
+      "height": 1080,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": [],
+      "overflow": null
+    }
+  ],
+  "performance": {
+    "hardware": "NVIDIA GeForce RTX 3060 Ti (8 GB)",
+    "adapter": {
+      "vendor": "nvidia",
+      "architecture": "ampere",
+      "device": "",
+      "description": ""
+    },
+    "backend": "WebGPU",
+    "resolution": "1920x1080",
+    "quality": "auto",
+    "renderScale": 1,
+    "frames": 7602,
+    "seconds": 126.7164,
+    "averageFps": 59.992234627877686,
+    "meanFrameMs": 16.668823993685873,
+    "p95FrameMs": 16.799999999999272,
+    "p99FrameMs": 16.80000000000291,
+    "checkpoints": [
+      {
+        "time": 25.014699999999255,
+        "tick": 1715,
+        "phase": 1,
+        "cycles": 1,
+        "status": "playing"
+      },
+      {
+        "time": 50.046099999997764,
+        "tick": 3217,
+        "phase": 1,
+        "cycles": 1,
+        "status": "playing"
+      },
+      {
+        "time": 75.07730000000075,
+        "tick": 4719,
+        "phase": 1,
+        "cycles": 1,
+        "status": "playing"
+      },
+      {
+        "time": 100.92430000000074,
+        "tick": 6270,
+        "phase": 2,
+        "cycles": 1,
+        "status": "playing"
+      },
+      {
+        "time": 126.72519999999926,
+        "tick": 1102,
+        "phase": 1,
+        "cycles": 2,
+        "status": "playing"
+      }
+    ],
+    "errors": []
+  },
+  "limitations": [
+    "WebKit emulates Safari engine/profile behavior; real iOS Safari was not tested.",
+    "Controller coverage uses standard gamepad values, not a physical DualSense.",
+    "Hardware FPS measurements use Windows Chrome/WebGPU, separately from Linux software browser coverage."
+  ]
+}

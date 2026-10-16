@@ -1,75 +1,151 @@
-/** Original code-generated tiling textures and restrained material palette. No external assets or requests. */
+/** Three-band cel materials from my-3dge, with a coherent ink/ochre/teal palette and hand-drawn tile maps. */
 import * as T from 'three/webgpu';
-import { Rng } from '../../vendor/my3dge/my3dge.js';
-export function createMaterials() {
-  const rng = new Rng(407),
-    canvas = document.createElement('canvas');
-  canvas.width = 256;
-  canvas.height = 256;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#89958b';
+import { Rng, defineMaterial, createStyleSet, createOutline } from '../../vendor/my3dge/my3dge.js';
+export const PALETTE = Object.freeze({
+  stone: '#8498aa',
+  pale: '#d5d3bb',
+  dark: '#34445b',
+  floor: '#9da79f',
+  rock: '#394e63',
+  moss: '#4f7763',
+  gold: '#edbb60',
+  bronze: '#aa7d4e',
+  iron: '#acc7d1',
+  cloth: '#286e8d',
+  red: '#99465b',
+  bone: '#ede5cd',
+  black: '#1b2535',
+  leaf: '#efbb4c',
+  grass: '#7e9d72',
+  wood: '#755650',
+  flower: '#c88eaa',
+  paper: '#d5bb86',
+  water: '#386474',
+  banner: '#934355',
+  ivy: '#45776a',
+  glassBlue: '#56acbb',
+  glassRose: '#cc766b',
+  glassGold: '#e4bf67',
+});
+for (const [name, color] of Object.entries(PALETTE))
+  defineMaterial(`material:tune-${name}`, { color, roughness: 1 });
+function tileTexture(floor = false) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const ctx = c.getContext('2d'),
+    rng = new Rng(floor ? 61 : 89);
+  ctx.fillStyle = floor ? '#ededde' : '#e0e2dc';
   ctx.fillRect(0, 0, 256, 256);
-  for (let i = 0; i < 11000; i++) {
-    const c = rng.int(70, 160);
-    ctx.fillStyle = `rgba(${c},${c},${c},.14)`;
-    ctx.fillRect(rng.int(0, 255), rng.int(0, 255), rng.int(1, 4), rng.int(1, 3));
-  }
-  ctx.strokeStyle = '#4f5853';
-  ctx.lineWidth = 2;
-  for (let y = 0; y < 256; y += 64) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(256, y);
-    ctx.stroke();
-    for (let x = y % 128 ? 32 : 0; x < 256; x += 64) {
+  // Sparse inked fissures and dry-brush marks read as large stone, without the old miniature brick grid.
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  if (!floor) {
+    ctx.strokeStyle = '#6e7a80';
+    ctx.lineWidth = 2;
+    for (let y = 0; y < 256; y += 85) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(256, y);
+      ctx.stroke();
+      const x = y % 2 ? 80 : 168;
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctx.lineTo(x, y + 64);
+      ctx.lineTo(x, y + 85);
       ctx.stroke();
     }
   }
-  const stoneTex = new T.CanvasTexture(canvas);
-  stoneTex.wrapS = stoneTex.wrapT = T.RepeatWrapping;
-  stoneTex.colorSpace = T.SRGBColorSpace;
-  stoneTex.anisotropy = 4;
-  const mat = (color, roughness = 0.85, metalness = 0) =>
-    new T.MeshStandardMaterial({ color, roughness, metalness });
-  const m = {
-    stone: mat('#777b70'),
-    pale: mat('#a2a58c'),
-    dark: mat('#343d3c'),
-    floor: mat('#909386'),
-    rock: mat('#3b4b46'),
-    moss: mat('#53624a'),
-    gold: mat('#bd9960', 0.38, 0.72),
-    bronze: mat('#76684b', 0.5, 0.6),
-    iron: mat('#667d80', 0.4, 0.68),
-    cloth: mat('#263d48'),
-    red: mat('#5e3332'),
-    bone: mat('#b2b5a4'),
-    black: mat('#1b2427'),
-    leaf: mat('#e0ad52'),
-    grass: mat('#8c956b'),
-  };
-  m.stone.map = stoneTex;
-  m.floor.map = stoneTex;
-  m.pale.map = stoneTex;
-  m.glow = new T.MeshBasicMaterial({ color: '#ffdb8e', toneMapped: false });
-  m.cyan = new T.MeshBasicMaterial({ color: '#a4e8e2', toneMapped: false });
-  m.ember = new T.MeshBasicMaterial({ color: '#ec8b5e', toneMapped: false });
-  m.water = new T.MeshStandardMaterial({
-    color: '#344d4d',
-    roughness: 0.3,
-    metalness: 0.4,
-    transparent: true,
-    opacity: 0.75,
-  });
+  for (let i = 0; i < (floor ? 4 : 7); i++) {
+    const x = rng.range(0, 256),
+      y = rng.range(0, 256);
+    ctx.strokeStyle = floor ? '#8c9997' : '#89959b';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 12, y + 17);
+    ctx.lineTo(x + 7, y + 27);
+    ctx.lineTo(x + 24, y + 39);
+    ctx.stroke();
+    ctx.strokeStyle = '#ffffff88';
+    ctx.beginPath();
+    ctx.moveTo(x + 2, y);
+    ctx.lineTo(x + 14, y + 15);
+    ctx.stroke();
+  }
+  for (let i = 0; i < 85; i++) {
+    ctx.fillStyle = i % 3 ? '#53646a0b' : '#fff7da20';
+    ctx.fillRect(rng.range(0, 256), rng.range(0, 256), rng.range(3, 20), 1);
+  }
+  const texture = new T.CanvasTexture(c);
+  texture.wrapS = texture.wrapT = T.RepeatWrapping;
+  texture.colorSpace = T.SRGBColorSpace;
+  texture.anisotropy = 4;
+  return texture;
+}
+function clothTexture() {
+  const c = document.createElement('canvas');
+  c.width = 128;
+  c.height = 256;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#934355';
+  ctx.fillRect(0, 0, 128, 256);
+  ctx.strokeStyle = '#e6bd72';
+  ctx.lineWidth = 4;
+  ctx.strokeRect(8, 8, 112, 238);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(13, 13, 102, 228);
+  ctx.fillStyle = '#ead291';
+  ctx.beginPath();
+  ctx.arc(64, 91, 23, Math.PI, 0);
+  ctx.lineTo(91, 133);
+  ctx.lineTo(37, 133);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillRect(60, 53, 8, 112);
+  ctx.beginPath();
+  ctx.arc(64, 91, 32, 0, Math.PI * 2);
+  ctx.stroke();
+  const t = new T.CanvasTexture(c);
+  t.colorSpace = T.SRGBColorSpace;
+  return t;
+}
+export function createMaterials({ textures = true } = {}) {
+  const styles = createStyleSet({ style: 'toon', toon: { bands: 3, rim: 0.12 } });
+  const m = Object.fromEntries(
+    Object.keys(PALETTE).map((name) => [name, styles.get(`material:tune-${name}`)]),
+  );
+  if (textures) {
+    m.stone.map = tileTexture();
+    m.floor.map = tileTexture(true);
+    m.pale.map = tileTexture(true);
+    m.banner.map = clothTexture();
+    m.banner.color.set('#ffffff');
+  }
+  m.banner.side = T.DoubleSide;
+  m.grass.side = T.DoubleSide;
+  m.ivy.side = T.DoubleSide;
+  m.glow = new T.MeshBasicMaterial({ color: '#ffe3a1', toneMapped: false });
+  m.cyan = new T.MeshBasicMaterial({ color: '#a0eee3', toneMapped: false });
+  m.ember = new T.MeshBasicMaterial({ color: '#ef9875', toneMapped: false });
   m.ghost = new T.MeshBasicMaterial({
-    color: '#dfd5aa',
+    color: '#cbe4d6',
     transparent: true,
     opacity: 0.22,
     depthWrite: false,
     side: T.DoubleSide,
+  });
+  m.ink = new T.LineBasicMaterial({ color: '#223246', transparent: true, opacity: 0.35, fog: true });
+  const smooth = createOutline({ color: '#182539', width: 1.7, mode: 'normal' });
+  const angular = createOutline({ color: '#182539', width: 1.45, mode: 'centre' });
+  Object.defineProperties(m, {
+    styles: { value: styles },
+    outline: { value: (mesh, shape = 'sphere') => (shape === 'box' ? angular : smooth).shell(mesh) },
+    dispose: {
+      value: () => {
+        styles.dispose();
+        smooth.dispose();
+        angular.dispose();
+      },
+    },
   });
   return m;
 }

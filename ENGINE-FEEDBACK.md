@@ -28,6 +28,12 @@ Used public APIs: `createHeadless`, `defineScene`, `defineComponent`, `defineSet
 
 8. **Firefox module initialization.** three.js r182 reads `self.GPUShaderStage` during module evaluation even when only WebGL2 will be used. Firefox without WebGPU does not expose that enum, causing a startup exception. `src/bootstrap.js` supplies the standard three enum values before importing the application; it does not emulate or claim WebGPU support. All five Firefox desktop viewports then rendered without errors.
 
+## Cel-shaded art pass
+
+The follow-up art pass additionally uses public `defineMaterial`, `createStyleSet({style:'toon', toon:{bands:3,rim:0.12}})`, `createOutline` and `twoBone` APIs. These supply banded/shadow-aware lighting, constant-pixel silhouette lines and foot/support-hand IK without changing the lean artifact.
+
+One concrete material issue surfaced: cloning `MeshBandedToonNodeMaterial` with inherited `clone()` produces a white color instead of retaining the original palette color. The game copies the source color and toon settings explicitly for the cape and trim. A regression assertion checks the cloak color. An explicit public clone helper or complete `copy()` override would remove that workaround.
+
 ## Local engine patches
 
 None. All extensions are game-side adapters or systems. The upstream library and license remain unchanged.

@@ -34,7 +34,7 @@ export async function createRenderer(canvas, settings) {
     forceWebGL = true;
   }
   renderer.toneMapping = T.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.18;
+  renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.PCFShadowMap;
   let backend = forceWebGL ? 'WebGL2 compatibility' : 'WebGPU';
@@ -52,7 +52,7 @@ export async function createRenderer(canvas, settings) {
       renderer = new T.WebGPURenderer({ canvas, antialias: true, forceWebGL: true });
       await renderer.init();
       renderer.toneMapping = T.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.18;
+      renderer.toneMappingExposure = 1.05;
       renderer.shadowMap.enabled = true;
       backend = 'WebGL2 compatibility';
       resize();
@@ -63,14 +63,14 @@ export async function createRenderer(canvas, settings) {
   };
   const materials = createMaterials(),
     scene = new T.Scene();
-  scene.background = new T.Color('#5b716c');
-  scene.fog = new T.FogExp2('#778b8d', 0.008);
+  scene.background = new T.Color('#5b8194');
+  scene.fog = new T.FogExp2('#789aa7', 0.006);
   const camera = new T.PerspectiveCamera(53, 1, 0.1, 420),
     world = buildWorld(materials);
   scene.add(world.static, world.dynamic);
-  const hemi = new T.HemisphereLight('#d0e0ea', '#293c42', 2.1);
+  const hemi = new T.HemisphereLight('#b6d5e7', '#3c354c', 0.95);
   scene.add(hemi);
-  const sun = new T.DirectionalLight('#ffddae', 3.8);
+  const sun = new T.DirectionalLight('#ffdfad', 3.2);
   sun.position.set(-25, 55, -35);
   sun.castShadow = true;
   sun.shadow.mapSize.set(1536, 1536);
@@ -83,7 +83,7 @@ export async function createRenderer(canvas, settings) {
   sun.shadow.bias = -0.0003;
   sun.shadow.normalBias = 0.08;
   scene.add(sun, sun.target);
-  const fill = new T.DirectionalLight('#b6dce2', 0.7);
+  const fill = new T.DirectionalLight('#adcfe4', 0.22);
   fill.position.set(20, 8, 60);
   scene.add(fill);
   const skyGeo = new T.SphereGeometry(350, 32, 16),
@@ -91,7 +91,7 @@ export async function createRenderer(canvas, settings) {
   const pos = skyGeo.attributes.position;
   for (let i = 0; i < pos.count; i++) {
     const t = T.MathUtils.clamp((pos.getY(i) + 20) / 240, 0, 1),
-      color = new T.Color('#b6b89a').lerp(new T.Color('#253e43'), t);
+      color = new T.Color('#b8c8bc').lerp(new T.Color('#305a77'), t);
     colors.push(color.r, color.g, color.b);
   }
   skyGeo.setAttribute('color', new T.Float32BufferAttribute(colors, 3));
@@ -197,6 +197,12 @@ export async function createRenderer(canvas, settings) {
     get diagnostics() {
       return {
         backend,
+        artStyle: {
+          lighting: 'my-3dge banded toon',
+          bands: materials.styles.toon.values().bands,
+          outlines: true,
+          details: world.details.counts,
+        },
         downgrades,
         adapter: adapter?.info
           ? {
@@ -216,6 +222,12 @@ export async function createRenderer(canvas, settings) {
         samples: measurements.slice(-120),
       };
     },
+    async warmup() {
+      await renderer.compileAsync(scene, camera);
+      frameCount = 0;
+      measurements = [];
+      frameAverage = 16.7;
+    },
     setQuality(value) {
       quality = value;
       resize();
@@ -223,7 +235,13 @@ export async function createRenderer(canvas, settings) {
     reset() {
       first = true;
       effects.reset();
+      pilgrim.reset();
+      npcrig.reset();
+      for (const rig of actors.values()) rig.reset();
       yaw = Math.PI;
+    },
+    motionReport() {
+      return { player: pilgrim.report(), enemies: [...actors].map(([id, rig]) => ({ id, ...rig.report() })) };
     },
     project(x, y, z) {
       projectPoint.set(x, y, z).project(camera);
@@ -254,9 +272,9 @@ export async function createRenderer(canvas, settings) {
           slowFrames = 0;
         }
       }
-      pilgrim.animate(s.p, time);
+      pilgrim.animate(s.p, time, dt, s.c.tick, reducedMotion);
       pilgrim.root.visible = mode !== 'title';
-      npcrig.animate({ ...NPC, yaw: 0.5, hp: 1, state: 'idle' }, time);
+      npcrig.animate({ ...NPC, yaw: 0.5, hp: 1, state: 'idle' }, time, dt, s.c.tick, reducedMotion);
       for (const e of s.enemies) {
         if (!actors.has(e.id)) {
           const rig = character(materials, e.kind);
@@ -264,7 +282,7 @@ export async function createRenderer(canvas, settings) {
           scene.add(rig.root);
         }
         const rig = actors.get(e.id);
-        rig.animate(e, time);
+        rig.animate(e, time, dt, s.c.tick, reducedMotion);
         rig.root.visible = distance(s.p, e) < 52 || (mode === 'title' && e.kind === 'boss');
       }
       for (const item of ITEMS) {
@@ -292,6 +310,7 @@ export async function createRenderer(canvas, settings) {
       world.fog.visible = !s.c.bossDead;
       world.fog.material.opacity = 0.17 + Math.sin(time) * 0.05;
       effects.update(s, time, dt);
+      world.details.update(time, reducedMotion);
       if (mode === 'title') {
         const drift = reducedMotion ? 0 : Math.sin(time * 0.06) * 2.5;
         desired.set(49 + drift, 9.5, 122);
@@ -342,8 +361,8 @@ export async function createRenderer(canvas, settings) {
       first = false;
       sun.position.set(s.p.x - 28, 52, s.p.z - 25);
       sun.target.position.set(s.p.x, 0, s.p.z - 5);
-      scene.fog.color.set(s.c.bossDead ? '#9b9e80' : '#778b8d');
-      hemi.intensity = s.c.bossDead ? 2.6 : 2.1;
+      scene.fog.color.set(s.c.bossDead ? '#b0ba99' : '#789aa7');
+      hemi.intensity = s.c.bossDead ? 1.15 : 0.95;
       renderer.info.reset();
       renderer.render(scene, camera);
     },
