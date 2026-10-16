@@ -51,3 +51,7 @@ WebKit with iPhone/iPad profiles is engine/profile emulation, not real iOS Safar
 Software-rendered Linux browsers are used for compatibility and screenshots and may run below 25 FPS. The hardware target was measured separately on the actual RTX 3060 Ti. The recorded 1080p performance does not claim every resolution, device, driver or concurrent workload will match it. The adaptive quality setting reduces visual cost independently of simulation rules.
 
 The optimized pilot’s duration is not a measured human playthrough duration. The slice is a single original authored level; it does not include multiplayer or an open-world streaming service.
+
+## Repository verification
+
+The public repository is [michaelcrosato/TarnishedTune-4R](https://github.com/michaelcrosato/TarnishedTune-4R). Its [initial CI run](https://github.com/michaelcrosato/TarnishedTune-4R/actions/runs/38967157845) passed engine integrity, formatting, all 25 logical tests and the production build. The complete browser suite also passed against the built static output, including consumption of Cross so title confirmation does not also trigger a jump.

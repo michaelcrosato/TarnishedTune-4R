@@ -27,10 +27,11 @@
       "ten-second title inactivity starts actual autonomous gameplay",
       "keyboard interrupts attract immediately and demo cannot overwrite a player save",
       "complete demo reaches victory and autonomously restarts",
-      "standard PS5 Cross confirms the focused title item",
+      "standard PS5 Cross confirms the focused title item without a gameplay action",
       "gamepad stick input interrupts demo"
     ],
-    "errors": []
+    "errors": [],
+    "build": "production Vite output"
   },
   "viewports": [
     {
@@ -336,5 +337,11 @@
     "screen": "pause",
     "hp": 120,
     "errors": []
+  },
+  "repository": {
+    "url": "https://github.com/michaelcrosato/TarnishedTune-4R",
+    "visibility": "PUBLIC",
+    "initialCiRun": "https://github.com/michaelcrosato/TarnishedTune-4R/actions/runs/38967157845",
+    "initialCiConclusion": "success"
   }
 }

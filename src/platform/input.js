@@ -171,7 +171,7 @@ export function createInput(onPhysical) {
         (keys.has('KeyS') || keys.has('ArrowDown') ? 1 : 0) +
         s.move[1];
       const move = cameraMove(x, z, yaw);
-      const b = [...mouse, ...s.held.filter((v) => v !== 'sprint')];
+      const b = [...mouse, ...s.held.filter((v) => v === 'guard')];
       if (sprintLatched) b.push('sprint');
       if (keys.has('ShiftLeft') || keys.has('ShiftRight')) b.push('sprint');
       if (keys.has('KeyL')) b.push('guard');

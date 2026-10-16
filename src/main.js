@@ -279,6 +279,7 @@ async function boot() {
       dt = Math.min(0.1, Math.max(0, raw));
     last = now;
     time += dt;
+    const menuWasOpen = !!ui.screen;
     const controls = input.poll(view.yaw, dt, time);
     if (settings.invertY) controls.look[1] *= -1;
     if (flow.mode === 'title') {
@@ -298,6 +299,12 @@ async function boot() {
         screen('journal');
         save();
       }
+    }
+    if (menuWasOpen && !ui.screen) {
+      controls.p = [];
+      controls.b = [];
+      controls.move = [0, 0];
+      pendingPress.clear();
     }
     if (!busy && (flow.mode === 'demo' || (flow.mode === 'play' && !ui.screen))) {
       controls.p.forEach((p) => pendingPress.add(p));

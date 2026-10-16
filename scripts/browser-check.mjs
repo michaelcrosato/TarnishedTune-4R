@@ -160,7 +160,8 @@ try {
   await mode('play');
   pad.buttons[0] = { pressed: false, value: 0 };
   await page.evaluate((p) => __tune.setGamepad(p), pad);
-  check('standard PS5 Cross confirms the focused title item');
+  assert.equal((await snap()).p.y, 0, 'Menu confirmation must not also jump');
+  check('standard PS5 Cross confirms the focused title item without a gameplay action');
   await page.evaluate(() => __tune.action('title'));
   await page.evaluate(() => __tune.action('demo'));
   await mode('demo');
