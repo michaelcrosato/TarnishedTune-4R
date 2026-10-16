@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/michaelcrosato/my-3dge",
+  "commit": "ff439e25f23762908d0fae29391547c7ccc9d43c",
+  "artifact": "vendor/my3dge/my3dge.js",
+  "sha256": "a112d0c5ceb5110507a9153007d1cc3cab7923e03d1c09426d51dfb44b96439c",
+  "version": "0.0.0 (commit-pinned lean distribution)",
+  "localPatches": []
+}

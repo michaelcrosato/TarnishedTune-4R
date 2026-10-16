@@ -1,0 +1,507 @@
+@import url('./screens.css');
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eee9d9;
+  background: #111d20;
+  font-synthesis: none;
+  --gold: #d0b27c;
+  --muted: #b3b9ae;
+  --panel: rgba(13, 24, 27, 0.93);
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  overscroll-behavior: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 5px;
+}
+button:focus {
+  outline-offset: 5px;
+}
+button,
+input {
+  touch-action: manipulation;
+}
+[hidden] {
+  display: none !important;
+}
+#world {
+  display: block;
+  width: 100vw;
+  height: 100dvh;
+  outline: 0;
+  touch-action: none;
+}
+.cinema,
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.cinema {
+  background: radial-gradient(ellipse at 60% 45%, transparent 26%, rgba(5, 14, 17, 0.5) 100%);
+  box-shadow: inset 0 0 95px #07131666;
+}
+.grain {
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.5' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  background: #142225;
+  z-index: 30;
+  transition: opacity 0.8s;
+}
+#loading p {
+  font:
+    32px Georgia,
+    serif;
+  color: #e7d6ad;
+  margin: 24px 0;
+}
+#loading span {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: #acb3a8;
+}
+.loading-rune {
+  font: 70px Georgia;
+  color: var(--gold);
+  animation: breathe 2s infinite;
+}
+#performance {
+  position: fixed;
+  right: 22px;
+  bottom: 16px;
+  z-index: 20;
+  font:
+    11px ui-monospace,
+    monospace;
+  letter-spacing: 0.03em;
+  color: #d7dfd2;
+  text-shadow: 0 1px 4px #000;
+  background: #10212375;
+  padding: 5px 8px;
+  border-radius: 2px;
+}
+#performance span {
+  color: #b6c3bb;
+  margin-left: 8px;
+}
+#mobile-menu {
+  display: none;
+  position: fixed;
+  right: 14px;
+  top: 14px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #b7ad7d77;
+  background: #17262688;
+  color: #e3d6b5;
+  z-index: 25;
+  font-size: 23px;
+}
+#save-status {
+  position: fixed;
+  right: 25px;
+  bottom: 47px;
+  font-size: 12px;
+  max-width: 350px;
+  color: #e9cd91;
+  text-align: right;
+  pointer-events: none;
+  z-index: 25;
+}
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  text-shadow: 0 2px 5px #000;
+}
+.vitals {
+  position: absolute;
+  left: 3.4vw;
+  top: 4.7vh;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  width: 290px;
+}
+.vow-mark {
+  border: 1px solid #cbb47987;
+  outline: 1px solid #cbb47938;
+  outline-offset: 4px;
+  color: #edd59a;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  text-align: center;
+  font: 40px Georgia;
+}
+.vital-bars {
+  flex: 1;
+}
+.bar {
+  height: 10px;
+  background: #17211ee0;
+  border: 1px solid #979b7270;
+  padding: 2px;
+  box-shadow: 0 2px 7px #0005;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: #963c39;
+  transition: width 0.12s linear;
+  width: 100%;
+}
+.bar.stamina {
+  height: 7px;
+  width: 87%;
+  margin-top: 7px;
+}
+.stamina i {
+  background: #819679;
+}
+.vital-caption {
+  font-size: 9px;
+  letter-spacing: 0.17em;
+  color: #d3d7c6;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.compass {
+  position: absolute;
+  top: 4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font: 10px Georgia;
+  letter-spacing: 0.12em;
+  color: #d5ccb1;
+}
+.compass i {
+  flex: 1;
+  height: 1px;
+  background: #cfc7a57a;
+}
+.compass b {
+  font-weight: normal;
+  color: #e4d1a2;
+}
+.compass #region {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font: 14px Georgia;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+}
+.quest {
+  position: absolute;
+  right: 3.4vw;
+  top: 4.7vh;
+  text-align: right;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #d6c18e;
+}
+.quest #objective {
+  font: 16px Georgia;
+  letter-spacing: 0.03em;
+  color: #e5e4d5;
+  margin-top: 10px;
+}
+.equipment {
+  position: absolute;
+  left: 3.7vw;
+  bottom: 7vh;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.phial {
+  position: relative;
+  width: 56px;
+  height: 65px;
+  background: #111d2088;
+  border: 1px solid #b2a87a77;
+  display: grid;
+  place-items: center;
+  transform: rotate(-4deg);
+}
+.phial > span {
+  font: 48px Georgia;
+  color: #e5b666;
+}
+.phial strong {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  font: 18px Georgia;
+  color: #fff;
+}
+.equipment small {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: #d2c298;
+}
+.equipment p {
+  font: 22px Georgia;
+  margin: 8px 0;
+}
+.equipment #echoes {
+  font: 14px Georgia;
+  color: #c7b180;
+}
+.control-hint {
+  white-space: pre-line;
+  position: absolute;
+  right: 3.5vw;
+  bottom: 7vh;
+  font-size: 11px;
+  color: #d7d7c9;
+  line-height: 2.1;
+  text-align: right;
+  letter-spacing: 0.05em;
+}
+.interact {
+  position: absolute;
+  bottom: 17vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 36px;
+  min-width: 250px;
+  text-align: center;
+  font: 19px Georgia;
+  background: linear-gradient(90deg, transparent, #122124e8 15%, #122124e8 85%, transparent);
+  border-top: 1px solid #c8b78255;
+  border-bottom: 1px solid #c8b78255;
+}
+.interact kbd {
+  display: inline-block;
+  font: 16px Arial;
+  margin-right: 13px;
+  color: #e2c991;
+}
+.toast {
+  position: absolute;
+  bottom: 24vh;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 620px;
+  width: max-content;
+  text-align: center;
+  font: 18px/1.6 Georgia;
+  color: #e4d5b6;
+  transition: opacity 0.5s;
+  opacity: 0;
+  text-shadow:
+    0 2px 6px #000,
+    0 0 20px #07191a;
+}
+.boss {
+  position: absolute;
+  bottom: 7vh;
+  left: 25%;
+  width: 50%;
+}
+.boss > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2px 10px;
+}
+.boss span {
+  font: 23px Georgia;
+  color: #e5dbc5;
+}
+.boss small {
+  font-size: 9px;
+  letter-spacing: 0.17em;
+  color: #c8a982;
+}
+.boss .bar {
+  height: 12px;
+}
+.boss .bar i {
+  background: linear-gradient(90deg, #742e30, #ae5c4a);
+}
+#demo-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-align: center;
+  color: #e2d2aa;
+  pointer-events: none;
+  text-shadow: 0 2px 5px #000;
+}
+#demo-banner small {
+  display: block;
+  margin-top: 8px;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: #dddccc;
+}
+.live-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #dbbf80;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: breathe 2s infinite;
+}
+#damage-numbers {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+#damage-numbers span {
+  position: absolute;
+  font: 24px Georgia;
+  color: #f1ddb2;
+  text-shadow: 0 2px 4px #000;
+  animation: damage 0.9s forwards;
+}
+@keyframes breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+@keyframes damage {
+  from {
+    transform: translate(-50%, -10px);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -65px);
+    opacity: 0;
+  }
+}
+@media (min-width: 1800px) {
+  .vitals {
+    width: 360px;
+  }
+  .vow-mark {
+    width: 52px;
+    height: 52px;
+    font-size: 46px;
+  }
+  .vital-caption,
+  .quest,
+  .equipment small {
+    font-size: 13px;
+  }
+  .compass {
+    width: 290px;
+    font-size: 13px;
+  }
+  .compass #region {
+    font-size: 20px;
+  }
+  .equipment p {
+    font-size: 27px;
+  }
+  .control-hint {
+    font-size: 15px;
+  }
+  .quest #objective {
+    font-size: 21px;
+  }
+  .interact {
+    font-size: 24px;
+  }
+  .toast {
+    font-size: 23px;
+  }
+  .boss span {
+    font-size: 30px;
+  }
+}
+@media (max-width: 1000px) {
+  .vitals {
+    width: 230px;
+    gap: 12px;
+  }
+  .quest #objective {
+    font-size: 13px;
+  }
+  .compass {
+    width: 130px;
+  }
+  .compass #region {
+    font-size: 11px;
+  }
+  .equipment p {
+    font-size: 18px;
+  }
+  .boss {
+    left: 24%;
+    width: 55%;
+  }
+  .boss span {
+    font-size: 18px;
+  }
+  .boss small {
+    display: none;
+  }
+  .control-hint {
+    font-size: 9px;
+  }
+  .toast {
+    max-width: 70vw;
+    font-size: 15px;
+  }
+}
+body.mobile #hud,
+body.mobile #demo-banner,
+body.mobile #damage-numbers {
+  display: none !important;
+}
+body.mobile #mobile-menu {
+  display: block;
+}
+body.mobile #performance {
+  right: 12px;
+  bottom: 10px;
+  font-size: 9px;
+}
+body.mobile .title-screen {
+  display: none;
+}
+body.reduced-motion * {
+  animation: none !important;
+  transition: none !important;
+}

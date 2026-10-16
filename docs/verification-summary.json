@@ -1,0 +1,340 @@
+{
+  "date": "2026-10-16",
+  "engine": {
+    "repository": "https://github.com/michaelcrosato/my-3dge",
+    "commit": "ff439e25f23762908d0fae29391547c7ccc9d43c",
+    "artifact": "vendor/my3dge/my3dge.js",
+    "sha256": "a112d0c5ceb5110507a9153007d1cc3cab7923e03d1c09426d51dfb44b96439c",
+    "version": "0.0.0 (commit-pinned lean distribution)",
+    "localPatches": []
+  },
+  "logic": {
+    "tests": 25,
+    "passing": 25,
+    "fullCampaignSeeds": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "completionTicks": 6473
+  },
+  "browser": {
+    "checks": [
+      "keyboard focus navigation, guide, and title-to-game entry",
+      "camera-relative movement and attack inputs reach the simulation",
+      "pause freezes simulation",
+      "controller-style settings change and persist",
+      "shrine, upgrade and departure UI",
+      "saved checkpoint survives reload and Continue restores progression",
+      "death presentation and checkpoint retry",
+      "final interaction produces the ending",
+      "ten-second title inactivity starts actual autonomous gameplay",
+      "keyboard interrupts attract immediately and demo cannot overwrite a player save",
+      "complete demo reaches victory and autonomously restarts",
+      "standard PS5 Cross confirms the focused title item",
+      "gamepad stick input interrupts demo"
+    ],
+    "errors": []
+  },
+  "viewports": [
+    {
+      "label": "Pixel 10",
+      "engine": "chromium",
+      "width": 360,
+      "height": 732,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "iPhone SE",
+      "engine": "webkit",
+      "width": 375,
+      "height": 667,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "iPhone 17 Pro",
+      "engine": "webkit",
+      "width": 402,
+      "height": 681,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "iPhone 17 Pro Max",
+      "engine": "webkit",
+      "width": 440,
+      "height": 763,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "iPhone 17 Pro landscape",
+      "engine": "webkit",
+      "width": 756,
+      "height": 352,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "Galaxy Z Fold 7 (open)",
+      "engine": "chromium",
+      "width": 984,
+      "height": 1016,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "Galaxy Tab S9",
+      "engine": "chromium",
+      "width": 640,
+      "height": 1024,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "iPad Mini",
+      "engine": "webkit",
+      "width": 768,
+      "height": 1024,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "iPad Pro 11 landscape",
+      "engine": "webkit",
+      "width": 1194,
+      "height": 834,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "4:3 1024x768",
+      "engine": "chromium",
+      "width": 1024,
+      "height": 768,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "4:3 1024x768",
+      "engine": "firefox",
+      "width": 1024,
+      "height": 768,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "4:3 1024x768",
+      "engine": "webkit",
+      "width": 1024,
+      "height": 768,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "Laptop 1366x768",
+      "engine": "chromium",
+      "width": 1366,
+      "height": 768,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "Laptop 1366x768",
+      "engine": "firefox",
+      "width": 1366,
+      "height": 768,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "Laptop 1366x768",
+      "engine": "webkit",
+      "width": 1366,
+      "height": 768,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "16:10 1440x900",
+      "engine": "chromium",
+      "width": 1440,
+      "height": 900,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "16:10 1440x900",
+      "engine": "firefox",
+      "width": 1440,
+      "height": 900,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "16:10 1440x900",
+      "engine": "webkit",
+      "width": 1440,
+      "height": 900,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "16:9 1920x1080",
+      "engine": "chromium",
+      "width": 1920,
+      "height": 1080,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "16:9 1920x1080",
+      "engine": "firefox",
+      "width": 1920,
+      "height": 1080,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "16:9 1920x1080",
+      "engine": "webkit",
+      "width": 1920,
+      "height": 1080,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "21:9 2560x1080",
+      "engine": "chromium",
+      "width": 2560,
+      "height": 1080,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "21:9 2560x1080",
+      "engine": "firefox",
+      "width": 2560,
+      "height": 1080,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    },
+    {
+      "label": "21:9 2560x1080",
+      "engine": "webkit",
+      "width": 2560,
+      "height": 1080,
+      "overflow": null,
+      "console_errors": [],
+      "page_errors": [],
+      "failed_requests": []
+    }
+  ],
+  "performance": {
+    "hardware": "NVIDIA GeForce RTX 3060 Ti, 8 GB (host nvidia-smi)",
+    "adapter": {
+      "vendor": "nvidia",
+      "architecture": "ampere",
+      "device": "",
+      "description": ""
+    },
+    "backend": "WebGPU",
+    "resolution": "1920x1080",
+    "seconds": 127.17609999999925,
+    "frames": 7631,
+    "averageFps": 60.00341259088811,
+    "averageFrameMs": 16.66571877866587,
+    "p95FrameMs": 16.799999999999272,
+    "p99FrameMs": 16.80000000000291,
+    "checkpoints": [
+      {
+        "time": 25.013,
+        "cycles": 1,
+        "tick": 1676,
+        "status": "playing",
+        "phase": 1
+      },
+      {
+        "time": 50.025699999999254,
+        "cycles": 1,
+        "tick": 3177,
+        "status": "playing",
+        "phase": 1
+      },
+      {
+        "time": 75.0391000000015,
+        "cycles": 1,
+        "tick": 4678,
+        "status": "playing",
+        "phase": 1
+      },
+      {
+        "time": 101.0885,
+        "cycles": 1,
+        "tick": 6241,
+        "status": "playing",
+        "phase": 2
+      },
+      {
+        "time": 127.168,
+        "cycles": 2,
+        "tick": 1092,
+        "status": "playing",
+        "phase": 1
+      }
+    ],
+    "errors": []
+  },
+  "recovery": {
+    "method": "QA device destruction and injected unexpected-loss callback",
+    "backend": "WebGL2 compatibility",
+    "mode": "play",
+    "screen": "pause",
+    "hp": 120,
+    "errors": []
+  }
+}
